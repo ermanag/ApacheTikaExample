@@ -1,14 +1,18 @@
 package ermanetwork;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeType;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.parser.pdf.PDFParser;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -64,7 +68,7 @@ public class ApacheTikaExample {
         return "";
     }
 
-    public static void findMetadata(){
+    public static void findMetadata() IOException, TikaException, SAXException{
         Metadata metadata = new Metadata();
         ContentHandler handler = new DefaultHandler();
         Parser parser = new PDFParser();
