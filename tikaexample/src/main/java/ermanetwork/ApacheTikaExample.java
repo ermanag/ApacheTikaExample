@@ -2,10 +2,9 @@ package ermanetwork;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.detect.Detector;
+import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
@@ -14,12 +13,15 @@ import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.parser.pdf.PDFParser;
 import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.*;
 
 
 public class ApacheTikaExample {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, TikaException, SAXException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         FileItem fileItem = factory.createItem("formFieldName", "application/pdf", false,
                 "C:\\Users\\erman.ag\\Desktop\\test.pdf");
@@ -39,7 +41,7 @@ public class ApacheTikaExample {
             MediaType mediaType = detector.detect(stream, metadata);
             MimeType mimeType = config.getMimeRepository().forName(mediaType.toString());
             String suffix = mimeType.getExtension();
-            if(!StringUtil.isNullOrEmpty(suffix))
+            if(!isNullOrEmpty(suffix))
                 return suffix;
             else
                 return "";
@@ -58,7 +60,7 @@ public class ApacheTikaExample {
             MediaType mediaType = detector.detect(stream, metadata);
             MimeType mimeType = config.getMimeRepository().forName(mediaType.toString());
             String suffix = mimeType.getExtension();
-            if(!StringUtil.isNullOrEmpty(suffix))
+            if(!isNullOrEmpty(suffix))
                 return suffix;
             else
                 return "";
@@ -68,7 +70,7 @@ public class ApacheTikaExample {
         return "";
     }
 
-    public static void findMetadata() IOException, TikaException, SAXException{
+    public static void findMetadata() throws IOException, TikaException, SAXException {
         Metadata metadata = new Metadata();
         ContentHandler handler = new DefaultHandler();
         Parser parser = new PDFParser();
@@ -83,4 +85,14 @@ public class ApacheTikaExample {
         for (String name : names)
             System.out.printf("%s : %s %n", name, metadata.get(name));
     }
+
+    public static boolean isNullOrEmpty(String data){
+        if(data != null && !data.trim().equals("")){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 }
+
