@@ -25,7 +25,7 @@ public class ApacheTikaExample {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         FileItem fileItem = factory.createItem("formFieldName", "application/pdf", false,
                 "C:\\Users\\erman.ag\\Desktop\\test.pdf");
-        findFileExtensionwithFile("");
+        findFileExtensionwithFile("C:\\Users\\erman.ag\\Desktop\\test.pdf");
         findFileExtensionwithFileItem(fileItem);
         findMetadata();
 
